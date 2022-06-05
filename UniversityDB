@@ -1,0 +1,243 @@
+USE [master]
+GO
+/****** Object:  Database [University]    Script Date: 6.06.2022 02:35:10 ******/
+CREATE DATABASE [University]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'University', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\University.mdf' , SIZE = 524288KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'University_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\University_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [University] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [University].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [University] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [University] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [University] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [University] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [University] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [University] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [University] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [University] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [University] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [University] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [University] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [University] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [University] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [University] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [University] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [University] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [University] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [University] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [University] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [University] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [University] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [University] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [University] SET RECOVERY FULL 
+GO
+ALTER DATABASE [University] SET  MULTI_USER 
+GO
+ALTER DATABASE [University] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [University] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [University] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [University] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [University] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [University] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'University', N'ON'
+GO
+ALTER DATABASE [University] SET QUERY_STORE = OFF
+GO
+USE [University]
+GO
+/****** Object:  Table [dbo].[Citys]    Script Date: 6.06.2022 02:35:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Citys](
+	[cityID] [tinyint] NOT NULL,
+	[cityName] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Citys] PRIMARY KEY CLUSTERED 
+(
+	[cityID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Department]    Script Date: 6.06.2022 02:35:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Department](
+	[DepartmentID] [tinyint] NOT NULL,
+	[DepartmentName] [varchar](30) NOT NULL,
+ CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED 
+(
+	[DepartmentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Lesson]    Script Date: 6.06.2022 02:35:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Lesson](
+	[lessonID] [tinyint] NOT NULL,
+	[lessonName] [nvarchar](30) NOT NULL,
+	[lessonCredit] [tinyint] NOT NULL,
+	[teacherID] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Lesson] PRIMARY KEY CLUSTERED 
+(
+	[lessonID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Notes]    Script Date: 6.06.2022 02:35:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Notes](
+	[studentNo] [int] NOT NULL,
+	[lessonID] [tinyint] NOT NULL,
+	[midterm] [tinyint] NOT NULL,
+	[final] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Notes] PRIMARY KEY CLUSTERED 
+(
+	[studentNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 6.06.2022 02:35:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+	[studentNo] [int] NOT NULL,
+	[studentFirstName] [nvarchar](50) NOT NULL,
+	[studentLastname] [nvarchar](50) NOT NULL,
+	[studentPhoneNumber] [char](11) NOT NULL,
+	[cityID] [tinyint] NOT NULL,
+	[studentClass] [tinyint] NOT NULL,
+	[departmentID] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
+(
+	[studentNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Teacher]    Script Date: 6.06.2022 02:35:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Teacher](
+	[teacherID] [tinyint] NOT NULL,
+	[teacherFirstName] [nvarchar](50) NOT NULL,
+	[teacherLastName] [nchar](10) NOT NULL,
+	[teacherPhoneNumber] [char](11) NOT NULL,
+	[cityID] [tinyint] NOT NULL,
+ CONSTRAINT [PK_Teacher] PRIMARY KEY CLUSTERED 
+(
+	[teacherID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Citys] ([cityID], [cityName]) VALUES (6, N'Ankara')
+INSERT [dbo].[Citys] ([cityID], [cityName]) VALUES (11, N'Bilecik')
+INSERT [dbo].[Citys] ([cityID], [cityName]) VALUES (34, N'İstanbul')
+INSERT [dbo].[Citys] ([cityID], [cityName]) VALUES (41, N'Kocaeli')
+GO
+INSERT [dbo].[Department] ([DepartmentID], [DepartmentName]) VALUES (1, N'İktisadi ve İdari Bilimler')
+INSERT [dbo].[Department] ([DepartmentID], [DepartmentName]) VALUES (2, N'Hukuk')
+INSERT [dbo].[Department] ([DepartmentID], [DepartmentName]) VALUES (3, N'Sosyal Bilimler')
+GO
+INSERT [dbo].[Lesson] ([lessonID], [lessonName], [lessonCredit], [teacherID]) VALUES (1, N'Java Programlama', 3, 1)
+GO
+INSERT [dbo].[Notes] ([studentNo], [lessonID], [midterm], [final]) VALUES (201735014, 1, 78, 90)
+GO
+INSERT [dbo].[Student] ([studentNo], [studentFirstName], [studentLastname], [studentPhoneNumber], [cityID], [studentClass], [departmentID]) VALUES (201735014, N'Ahmet Fatih', N'Güzeller', N'5415425911 ', 34, 3, 1)
+INSERT [dbo].[Student] ([studentNo], [studentFirstName], [studentLastname], [studentPhoneNumber], [cityID], [studentClass], [departmentID]) VALUES (201887878, N'Işıl', N'Işık', N'05415489635', 6, 2, 3)
+GO
+INSERT [dbo].[Teacher] ([teacherID], [teacherFirstName], [teacherLastName], [teacherPhoneNumber], [cityID]) VALUES (1, N'Akın', N'Kaldıroglu', N'05415555555', 34)
+INSERT [dbo].[Teacher] ([teacherID], [teacherFirstName], [teacherLastName], [teacherPhoneNumber], [cityID]) VALUES (2, N'Kerem ', N'Gülsoy    ', N'05445484896', 11)
+GO
+ALTER TABLE [dbo].[Lesson]  WITH CHECK ADD  CONSTRAINT [FK_Lesson_Teacher] FOREIGN KEY([lessonID])
+REFERENCES [dbo].[Teacher] ([teacherID])
+GO
+ALTER TABLE [dbo].[Lesson] CHECK CONSTRAINT [FK_Lesson_Teacher]
+GO
+ALTER TABLE [dbo].[Lesson]  WITH CHECK ADD  CONSTRAINT [FK_Lesson_Teacher1] FOREIGN KEY([teacherID])
+REFERENCES [dbo].[Teacher] ([teacherID])
+GO
+ALTER TABLE [dbo].[Lesson] CHECK CONSTRAINT [FK_Lesson_Teacher1]
+GO
+ALTER TABLE [dbo].[Notes]  WITH CHECK ADD  CONSTRAINT [FK_Notes_Lesson] FOREIGN KEY([lessonID])
+REFERENCES [dbo].[Lesson] ([lessonID])
+GO
+ALTER TABLE [dbo].[Notes] CHECK CONSTRAINT [FK_Notes_Lesson]
+GO
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD  CONSTRAINT [FK_Student_Citys] FOREIGN KEY([cityID])
+REFERENCES [dbo].[Citys] ([cityID])
+GO
+ALTER TABLE [dbo].[Student] CHECK CONSTRAINT [FK_Student_Citys]
+GO
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD  CONSTRAINT [FK_Student_Citys1] FOREIGN KEY([cityID])
+REFERENCES [dbo].[Citys] ([cityID])
+GO
+ALTER TABLE [dbo].[Student] CHECK CONSTRAINT [FK_Student_Citys1]
+GO
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD  CONSTRAINT [FK_Student_Department] FOREIGN KEY([departmentID])
+REFERENCES [dbo].[Department] ([DepartmentID])
+GO
+ALTER TABLE [dbo].[Student] CHECK CONSTRAINT [FK_Student_Department]
+GO
+ALTER TABLE [dbo].[Teacher]  WITH CHECK ADD  CONSTRAINT [FK_Teacher_Citys] FOREIGN KEY([cityID])
+REFERENCES [dbo].[Citys] ([cityID])
+GO
+ALTER TABLE [dbo].[Teacher] CHECK CONSTRAINT [FK_Teacher_Citys]
+GO
+ALTER TABLE [dbo].[Teacher]  WITH CHECK ADD  CONSTRAINT [FK_Teacher_Citys1] FOREIGN KEY([cityID])
+REFERENCES [dbo].[Citys] ([cityID])
+GO
+ALTER TABLE [dbo].[Teacher] CHECK CONSTRAINT [FK_Teacher_Citys1]
+GO
+USE [master]
+GO
+ALTER DATABASE [University] SET  READ_WRITE 
+GO
